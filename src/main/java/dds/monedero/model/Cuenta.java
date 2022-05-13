@@ -1,9 +1,6 @@
 package dds.monedero.model;
 
-import dds.monedero.exceptions.MaximaCantidadDepositosException;
-import dds.monedero.exceptions.MaximoExtraccionDiarioException;
-import dds.monedero.exceptions.MontoNegativoException;
-import dds.monedero.exceptions.SaldoMenorException;
+import dds.monedero.exceptions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,12 +11,16 @@ public class Cuenta {
   private double saldo = 0;
   private List<Movimiento> movimientos = new ArrayList<>();
 
-  public Cuenta() {
-    saldo = 0;
+  public Cuenta(double montoInicial) {
+    this.chequearMontoInicial(montoInicial);
+    saldo = montoInicial;
   }
 
-  public Cuenta(double montoInicial) {
-    saldo = montoInicial;
+  private void chequearMontoInicial(double montoInicial) {
+
+    if(montoInicial < 0) {
+      throw new InicializacionSaldoIncorrectoException("El monto inicial deber ser mayor o igual a 0");
+    }
   }
 
   public void setMovimientos(List<Movimiento> movimientos) {
