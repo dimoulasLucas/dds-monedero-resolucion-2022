@@ -41,7 +41,9 @@ public class Cuenta {
     
     this.chequearMontoDespositado(monto);
 
-    this.movimientos.add(new Movimiento(LocalDate.now(), monto, true));
+    Movimiento movimiento = new Movimiento(LocalDate.now(), monto, new Deposito());
+    this.agregarMovimiento(movimiento);
+    this.saldo += monto;
   }
   
   private void chequearMontoDespositado(double monto) {
@@ -76,9 +78,8 @@ public class Cuenta {
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
-  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
-    movimientos.add(movimiento);
+  private void agregarMovimiento(Movimiento movimiento) {
+    this.movimientos.add(movimiento);
   }
 
   public double getMontoExtraidoA(LocalDate fecha) {
