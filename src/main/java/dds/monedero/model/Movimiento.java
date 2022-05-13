@@ -10,26 +10,28 @@ public class Movimiento {
   private double monto;
   private boolean isDeposito;
 
+  public double getMonto() {
+    return monto;
+  }
+
   public Movimiento(LocalDate fecha, double monto, boolean isDeposito) {
     this.fecha = fecha;
     this.monto = monto;
     this.isDeposito = isDeposito;
   }
 
-  public double getMonto() {
-    return monto;
-  }
-
-  public LocalDate getFecha() {
-    return fecha;
-  }
-
   public boolean esDeLaFecha(LocalDate fecha) {
+
     return this.fecha.equals(fecha);
   }
   
   public boolean isDeposito() {
     
     return this.isDeposito;
+  }
+
+  public boolean esDepositoEnFecha(LocalDate fecha) {
+
+    return this.isDeposito && this.esDeLaFecha(fecha);
   }
 }

@@ -1,6 +1,5 @@
 package dds.monedero.model;
 
-import dds.monedero.exceptions.MaximaCantidadDepositosException;
 import dds.monedero.exceptions.MaximoExtraccionDiarioException;
 import dds.monedero.exceptions.MontoNegativoException;
 import dds.monedero.exceptions.SaldoMenorException;
@@ -40,15 +39,15 @@ public class MonederoTest {
   void extraerMasQueElSaldoDisponibleFalla() {
     assertThrows(SaldoMenorException.class, () -> {
           cuenta.depositar(90);
-          cuenta.sacar(1001);
+          cuenta.extraer(1001);
     });
   }
 
   @Test
   public void extraerMasDe1000PesosDiariosFalla() {
     assertThrows(MaximoExtraccionDiarioException.class, () -> {
-      cuenta.setSaldo(5000);
-      cuenta.sacar(1001);
+      cuenta.depositar(5000);
+      cuenta.extraer(1001);
     });
   }
 
@@ -56,7 +55,7 @@ public class MonederoTest {
   public void extraerMontoNegativoDelSaldoFalla() {
     assertThrows(MontoNegativoException.class, () -> {
       cuenta.depositar(1000);
-      cuenta.sacar(-500);
+      cuenta.extraer(-500);
     });
   }
 
@@ -64,7 +63,7 @@ public class MonederoTest {
   public void extraerMontoIgualA0Falla() {
     assertThrows(MontoNegativoException.class, () -> {
       cuenta.depositar(1000);
-      cuenta.sacar(0);
+      cuenta.extraer(0);
     });
   }
 
