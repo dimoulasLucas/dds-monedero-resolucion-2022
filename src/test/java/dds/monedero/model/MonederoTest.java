@@ -19,19 +19,19 @@ public class MonederoTest {
 
   @Test
   void ponerUnSaldoPositivoValidoNoFalla() {
-    assertDoesNotThrow(() -> cuenta.poner(1500));
+    assertDoesNotThrow(() -> cuenta.depositar(1500));
   }
 
   @Test
   void ponerUnSaldoNegativoInvalidoFalla() {
-    assertThrows(MontoNegativoException.class, () -> cuenta.poner(-1500));
+    assertThrows(MontoNegativoException.class, () -> cuenta.depositar(-1500));
   }
 
   @Test
   void saldoFinalEsIgualALaSumaDeSusDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
+    cuenta.depositar(1500);
+    cuenta.depositar(456);
+    cuenta.depositar(1900);
 
     assertEquals(3856, cuenta.getSaldo());
   }
@@ -39,7 +39,7 @@ public class MonederoTest {
   @Test
   void extraerMasQueElSaldoDisponibleFalla() {
     assertThrows(SaldoMenorException.class, () -> {
-          cuenta.poner(90);
+          cuenta.depositar(90);
           cuenta.sacar(1001);
     });
   }
@@ -55,7 +55,7 @@ public class MonederoTest {
   @Test
   public void extraerMontoNegativoDelSaldoFalla() {
     assertThrows(MontoNegativoException.class, () -> {
-      cuenta.poner(1000);
+      cuenta.depositar(1000);
       cuenta.sacar(-500);
     });
   }
@@ -63,7 +63,7 @@ public class MonederoTest {
   @Test
   public void extraerMontoIgualA0Falla() {
     assertThrows(MontoNegativoException.class, () -> {
-      cuenta.poner(1000);
+      cuenta.depositar(1000);
       cuenta.sacar(0);
     });
   }

@@ -37,16 +37,27 @@ public class Cuenta {
     }
   }
 
-  public void poner(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
+  public void depositar(double monto) {
+    
+    this.chequearMontoDespositado(monto);
+    
+    new Movimiento(LocalDate.now(), monto, true).agregateA(this);
+  }
+  
+  private void chequearMontoDespositado(double monto) {
+
+    if (monto <= 0) {
+      throw new MontoNegativoException(monto + ": el monto a ingresar debe ser un valor positivo");
     }
 
-    if (this.movimientos.stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
+    if (this.superaCantidadDepositosDiarios()) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
+  }
 
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
+  private boolean superaCantidadDepositosDiarios() {
+    
+    return this.movimientos.stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3;
   }
 
   public void sacar(double cuanto) {
