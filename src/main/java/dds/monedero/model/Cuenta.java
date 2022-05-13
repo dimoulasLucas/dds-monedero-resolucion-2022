@@ -13,18 +13,27 @@ public class Cuenta {
 
   public Cuenta(double montoInicial) {
     this.chequearMontoInicial(montoInicial);
-    saldo = montoInicial;
+    this.saldo = montoInicial;
   }
 
   private void chequearMontoInicial(double montoInicial) {
 
-    if(montoInicial < 0) {
+    if (montoInicial < 0) {
       throw new InicializacionSaldoIncorrectoException("El monto inicial deber ser mayor o igual a 0");
     }
   }
 
   public void setMovimientos(List<Movimiento> movimientos) {
+    this.chequearMovimientos(movimientos);
     this.movimientos = movimientos;
+  }
+
+  private void chequearMovimientos(List<Movimiento> movimientos) {
+
+    if (movimientos == null) {
+
+      throw new MovimientosInvalidosException("Los movimientos cargados deben ser una lista de movimientos");
+    }
   }
 
   public void poner(double cuanto) {
