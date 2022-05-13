@@ -40,8 +40,8 @@ public class Cuenta {
   public void depositar(double monto) {
     
     this.chequearMontoDespositado(monto);
-    
-    new Movimiento(LocalDate.now(), monto, true).agregateA(this);
+
+    this.movimientos.add(new Movimiento(LocalDate.now(), monto, true));
   }
   
   private void chequearMontoDespositado(double monto) {
