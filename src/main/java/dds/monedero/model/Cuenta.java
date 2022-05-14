@@ -52,9 +52,7 @@ public class Cuenta {
   
   private void chequearMontoDespositado(double monto) {
 
-    if (monto <= 0) {
-      throw new MontoNegativoException(monto + ": el monto a ingresar debe ser un valor positivo");
-    }
+    this.chequearMontoNoNegativo(monto);
 
     if (this.superaCantidadDepositosDiarios()) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
@@ -74,9 +72,7 @@ public class Cuenta {
 
   private void chequearMontoExtraido(double monto) {
 
-    if (monto <= 0) {
-      throw new MontoNegativoException(monto + ": el monto a ingresar debe ser un valor positivo");
-    }
+    this.chequearMontoNoNegativo(monto);
     if ((this.saldo - monto) < 0) {
       throw new SaldoMenorException("No puede sacar mas de " + this.saldo + " $");
     }
@@ -84,6 +80,13 @@ public class Cuenta {
     if (this.intentaExtraerMontoMayorAlDiario(monto)) {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + limite
           + " diarios, límiteExtraccionRestante: " + this.getMontoExtraidoA(LocalDate.now()));
+    }
+  }
+
+  private void chequearMontoNoNegativo(double monto) {
+
+    if (monto <= 0) {
+      throw new MontoNegativoException(monto + ": el monto a ingresar debe ser un valor positivo");
     }
   }
 
